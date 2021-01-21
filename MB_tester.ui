@@ -24,40 +24,65 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
+       <layout class="QVBoxLayout" name="verticalLayout_4"/>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
        <widget class="QListWidget" name="listWidget"/>
       </item>
       <item>
-       <widget class="QPushButton" name="ConnectButton">
-        <property name="text">
-         <string>Подключиться</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="Speed"/>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QComboBox" name="Port"/>
+        </item>
+        <item>
+         <widget class="QComboBox" name="Speed"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="ConnectButton">
+          <property name="text">
+           <string>Подключиться</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="EnableBtn">
+          <property name="text">
+           <string>Включить</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QComboBox" name="Port"/>
-      </item>
-      <item>
-       <widget class="QPushButton" name="EnableBtn">
-        <property name="text">
-         <string>Включить</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton">
-        <property name="text">
-         <string>PushButton</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <layout class="QVBoxLayout" name="verticalLayout"/>
     </item>
     <item>
      <widget class="QTableWidget" name="tableWidget">
@@ -198,7 +223,7 @@
      <x>0</x>
      <y>0</y>
      <width>1028</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
