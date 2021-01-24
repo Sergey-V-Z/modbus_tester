@@ -9,7 +9,7 @@ import serial
 import serial.tools.list_ports
 
 import MBtester  # Это наш конвертированный файл дизайна
-import dialog
+import port_dialog
 
 
 class ExampleApp(QtWidgets.QMainWindow, MBtester.Ui_MainWindow):
@@ -24,7 +24,7 @@ class ExampleApp(QtWidgets.QMainWindow, MBtester.Ui_MainWindow):
         self.realport = None
         self.ConnectButton.clicked.connect(self.connect)
         self.EnableBtn.clicked.connect(self.send)
-
+        action = self.menubar.actions()
         self.pushButton.clicked.connect(self.onBtnClicked)  # подключаем функцию к кнопке
 
     def connect(self):
@@ -35,10 +35,7 @@ class ExampleApp(QtWidgets.QMainWindow, MBtester.Ui_MainWindow):
         except Exception as e:
             print(e)
 
-
     def send(self):
-        my_dialog = QtWidgets.QDialog(self)
-        my_dialog.exec_()  # blocks all other windows until this window is closed.
         if self.realport:
             self.realport.write(b'b')
 
@@ -57,18 +54,21 @@ class ExampleApp(QtWidgets.QMainWindow, MBtester.Ui_MainWindow):
         """Launch the employee dialog."""
         dlg = EmployeeDlg(self)
         dlg.exec()
-        print(dlg.ui.lineEdit.text())
+        # print(dlg.ui.lineEdit.text())
         print(dlg)
+
 
 # класс для вызова диаллогового окна
 class EmployeeDlg(QtWidgets.QDialog):
     """Employee dialog."""
+
     def __init__(self, parent=None):
         super().__init__(parent)
         # Create an instance of the GUI
-        self.ui = dialog.Ui_Dialog()
+        self.ui = port_dialog.Ui_Dialog()
         # Run the .setupUi() method to show the GUI
         self.ui.setupUi(self)
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication
