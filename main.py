@@ -17,7 +17,7 @@ from modeles_ui import add_dialog
 from modeles_ui import port_dialog
 
 
-class ExampleApp(QtWidgets.QMainWindow, MBtester.Ui_MainWindow):
+class TesterApp(QtWidgets.QMainWindow, MBtester.Ui_MainWindow):
     def __init__(self):
         # Это здесь нужно для доступа к переменным, методам
         # и т.д. в файле design.py
@@ -58,6 +58,7 @@ class ExampleApp(QtWidgets.QMainWindow, MBtester.Ui_MainWindow):
     def action_port_settings(self):
         """Launch the employee dialog."""
         dlg = DialogPorts(self)
+        dlg.ui.com_port.addItems(serial_ports())  # сканируем порты и добовляем их
         dlg.exec()
         # print(dlg.ui.lineEdit.text())
 
@@ -95,7 +96,7 @@ class DialogAddLine(QtWidgets.QDialog):
 
 def main():
     app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication
-    window = ExampleApp()  # Создаём объект класса ExampleApp
+    window = TesterApp()  # Создаём объект класса ExampleApp
     window.show()  # Показываем окно
     app.exec_()  # и запускаем приложение
 
