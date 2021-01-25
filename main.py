@@ -8,8 +8,13 @@ import serial
 # import time
 import serial.tools.list_ports
 
-import MBtester  # Это наш конвертированный файл дизайна
-import port_dialog
+# import modeles_ui.MBtester as MBtester # Это наш конвертированный файл дизайна
+# import modeles_ui.port_dialog as port_dialog
+# import modeles_ui.add_dialog as add_dialog
+
+from modeles_ui import MBtester
+from modeles_ui import add_dialog
+from modeles_ui import port_dialog
 
 
 class ExampleApp(QtWidgets.QMainWindow, MBtester.Ui_MainWindow):
@@ -21,23 +26,23 @@ class ExampleApp(QtWidgets.QMainWindow, MBtester.Ui_MainWindow):
         self.setupUi(self)  # Это нужно для инициализации нашего дизайна
         self.Port.addItems(serial_ports())
         self.Speed.addItems(speeds)
-        self.realport = None
+        self.real_port = None
         self.ConnectButton.clicked.connect(self.connect)
         self.EnableBtn.clicked.connect(self.send)
-        action = self.menubar.actions()
-        self.pushButton.clicked.connect(self.onBtnClicked)  # подключаем функцию к кнопке
+        self.actionPort_Settings.triggered.connect(self.action_port_settings)  # подключаем функцию к action
+        self.pushButton.clicked.connect(self.browse_folder)  # подключаем функцию к кнопке
 
     def connect(self):
         try:
-            self.realport = serial.Serial(self.Port.currentText(), int(self.Speed.currentText()))
+            self.real_port = serial.Serial(self.Port.currentText(), int(self.Speed.currentText()))
             self.ConnectButton.setStyleSheet("background-color: green")
             self.ConnectButton.setText('Подключено')
         except Exception as e:
             print(e)
 
     def send(self):
-        if self.realport:
-            self.realport.write(b'b')
+        if self.real_port:
+            self.real_port.write(b'b')
 
     def browse_folder(self):
         self.listWidget.clear()  # На случай, если в списке уже есть элементы
@@ -49,23 +54,41 @@ class ExampleApp(QtWidgets.QMainWindow, MBtester.Ui_MainWindow):
             for file_name in os.listdir(directory):  # для каждого файла в директории
                 self.listWidget.addItem(file_name)  # добавить файл в listWidget
 
-    # функция для вызова диаллогового окна
-    def onBtnClicked(self):
+    # функция для вызова диаллогового окна для настройки порта
+    def action_port_settings(self):
         """Launch the employee dialog."""
-        dlg = EmployeeDlg(self)
+        dlg = DialogPorts(self)
         dlg.exec()
         # print(dlg.ui.lineEdit.text())
-        print(dlg)
+
+    # функция для вызова диаллогового окна для настройки порта
+    def action_add_line(self):
+        """Launch the employee dialog."""
+        dlg = DialogAddLine(self)
+        dlg.exec()
+        # print(dlg.ui.lineEdit.text())
 
 
 # класс для вызова диаллогового окна
-class EmployeeDlg(QtWidgets.QDialog):
-    """Employee dialog."""
+class DialogPorts(QtWidgets.QDialog):
+    """dialog for settings ports"""
 
     def __init__(self, parent=None):
         super().__init__(parent)
         # Create an instance of the GUI
         self.ui = port_dialog.Ui_Dialog()
+        # Run the .setupUi() method to show the GUI
+        self.ui.setupUi(self)
+
+
+# класс для вызова диаллогового окна
+class DialogAddLine(QtWidgets.QDialog):
+    """dialog for settings ports"""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        # Create an instance of the GUI
+        self.ui = add_dialog.Ui_Dialog()
         # Run the .setupUi() method to show the GUI
         self.ui.setupUi(self)
 
